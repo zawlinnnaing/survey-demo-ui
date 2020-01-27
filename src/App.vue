@@ -6,7 +6,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="./assets/style/app.css" />
+    <link rel="stylesheet" href="/style/app.css" />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">
         <img src="./assets/logo.png" width="150" height="50" />
@@ -43,7 +43,6 @@
   </div>
 </template>
 
-
 <script>
 import CreateForm from "./components/CreateForm";
 
@@ -67,7 +66,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 body {

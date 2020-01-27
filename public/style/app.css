@@ -1,0 +1,28 @@
+body {
+  /* background-color: #f5f5f5 !important; */
+}
+div.individual-question {
+  padding: 1rem;
+  margin: 1rem 0;
+}
+div.question-header {
+  text-align: left;
+  margin: 1rem 0;
+  color: white !important;
+}
+div.question-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+div.required-text {
+  color: #ff1744;
+}
+
+div.question-footer * {
+  margin: 0 2rem;
+}
+div.form-group label {
+  color: #fafafa;
+}

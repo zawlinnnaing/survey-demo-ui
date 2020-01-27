@@ -22,6 +22,8 @@
         <textarea
           id="formDescription"
           class="form-control"
+          :value="description"
+          @input="updateDescription"
           rows="5"
           cols="15"
         ></textarea>
@@ -60,6 +62,20 @@
         </div>
       </div>
     </div>
+    <div class="questions-field">
+      <question
+        v-for="(question, index) in questions"
+        :key="index"
+        :type="question.type"
+        :question="question.question"
+        :required="question.required"
+        :items="question.items"
+        :order="index"
+      ></question>
+    </div>
+    <div class="buttons-field" v-if="showBtn">
+      <button class="btn btn-primary " @click="submitForm">Create Form</button>
+    </div>
   </div>
 </template>
 
@@ -79,10 +95,12 @@ div.dropdown-menu {
 <script>
 import CreateTextQuestion from "./modals/CreateTextQuestion";
 import CreateListQuestion from "./modals/CreateListQuestion";
+import Question from "./subcomponents/Question";
 export default {
   components: {
     CreateTextQuestion,
-    CreateListQuestion
+    CreateListQuestion,
+    Question
   },
   computed: {
     title() {
@@ -90,11 +108,29 @@ export default {
     },
     description() {
       return this.$store.state.description;
+    },
+    questions() {
+      return this.$store.state.questions;
+    },
+    showBtn() {
+      return this.$store.state.questions.length > 0 ? true : false;
     }
   },
   methods: {
     updateTitle(e) {
       this.$store.commit("setTitle", e.target.value);
+    },
+    updateDescription(e) {
+      this.$store.commit("setDescription", e.target.value);
+    },
+    submitForm() {
+      try {
+        this.$store.dispatch("submitForm");
+        this.$store.dispatch("clearForm");
+        this.$router.push({ name: "CreateFormSuccess" });
+      } catch (e) {
+        alert(e.message);
+      }
     }
   }
 };
