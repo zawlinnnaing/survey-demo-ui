@@ -1,7 +1,7 @@
 <template>
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
-      <h1 class="display-4">Form create successfully</h1>
+      <h1 class="display-4">{{ $route.params.message }}</h1>
     </div>
   </div>
 </template>

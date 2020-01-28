@@ -2,13 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 import actions from "./actions";
 import { answer } from "./modules/answer";
+import tmpQuestion from "./modules/tmpQuestion";
 import error from "./modules/error";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     answer,
-    error
+    error,
+    tmpQuestion
   },
   state: {
     title: "",
@@ -24,6 +26,9 @@ export default new Vuex.Store({
     },
     getFormDescription(state) {
       return state.description;
+    },
+    getQuestionFromOrder: state => order => {
+      return state.questions.find(ele => ele.order == order);
     }
   },
   mutations: {
@@ -48,16 +53,25 @@ export default new Vuex.Store({
     initItems(state) {
       state.items = [
         {
-          itemName: "New Option",
-          itemId: 0
+          itemName: "New Option"
         }
       ];
+    },
+    setItems(state, items) {
+      state.items = items;
     },
     editItems(state, payload) {
       state.items[payload.index] = {
         itemName: payload.itemName,
         order: payload.index
       };
+    },
+    editQuestion(state, questionObj) {
+      let index = state.questions.findIndex(
+        ele => ele.order == questionObj.order
+      );
+      console.log("from edit question", questionObj);
+      state.questions.splice(index, 1, questionObj);
     },
     deleteItemFromItems(state, index) {
       state.items.splice(index, 1);
@@ -77,6 +91,7 @@ export default new Vuex.Store({
     },
     clearForm(state) {
       state.questions = [];
+      state.questionId = 0;
       state.title = "";
       state.description = "";
     }

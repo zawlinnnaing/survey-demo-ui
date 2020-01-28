@@ -16,7 +16,8 @@
         <div class="modal-body">
           <div class="form-group">
             <input
-              v-model="question"
+              :value="question"
+              @input="setQuestion"
               class="form-control"
               id="listQuestionInput"
               placeholder="Enter your question"
@@ -28,7 +29,8 @@
                 class="form-check-input"
                 id="listQuestionRequired"
                 type="checkbox"
-                v-model="required"
+                :value="required"
+                @change="setRequired"
               />
               <label for="listQuestionRequired" class="form-check-label"
                 >Required ?
@@ -44,9 +46,9 @@
               <input
                 type="radio"
                 name="listQuestionType"
-                v-model="questionType"
+                @change="setType"
                 :value="type"
-                checked
+                v-bind="{ checked: questionType == type ? true : false }"
               />
               <label class="form-check-label">{{ type }}</label>
             </div>
@@ -70,7 +72,20 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="saveQuestion()">
+          <button
+            type="button"
+            v-show="!edited"
+            class="btn btn-primary"
+            @click="saveQuestion()"
+          >
+            Create question
+          </button>
+          <button
+            v-show="edited"
+            type="button"
+            class="btn btn-primary"
+            @click="updateQuestion"
+          >
             Save changes
           </button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -93,23 +108,39 @@ div.option {
 
 <script>
 export default {
+  props: ["edited", "questionId"],
   data() {
     return {
-      question: "",
-      questionType: "",
-      required: false,
       types: ["checkbox", "radio", "dropdown"]
     };
   },
   computed: {
     items() {
       return this.$store.state.items;
+    },
+    question() {
+      return this.$store.state.tmpQuestion.question;
+    },
+    questionType() {
+      return this.$store.state.tmpQuestion.type;
+    },
+    required() {
+      return this.$store.state.tmpQuestion.required;
     }
   },
   created() {
     this.$store.commit("initItems");
   },
   methods: {
+    setQuestion(e) {
+      this.$store.commit("tmpQuestion/setQuestion", e.target.value);
+    },
+    setRequired(e) {
+      this.$store.commit("tmpQuestion/setRequired", e.target.value);
+    },
+    setType(e) {
+      this.$store.commit("tmpQuestion/setType", e.target.value);
+    },
     editItem(e) {
       let payload = {
         itemName: e.target.value,
@@ -137,16 +168,32 @@ export default {
           question: this.question,
           required: this.required,
           type: this.questionType,
-          items: this.$store.state.items
+          listItems: this.$store.state.items
         };
+        console.log("from create list question", questionObj);
         this.$store.commit("addQuestion", questionObj);
+        this.$store.commit("tmpQuestion/clear");
         this.$store.commit("initItems");
       }
     },
-    clearModal() {
-      this.question = "";
-      this.questionType = "";
-      this.required = false;
+    updateQuestion() {
+      if (String(this.question) == "" || String(this.questionType) == "") {
+        alert("Empty question or question type");
+      } else {
+        this.$store.commit("reorderItems");
+        let questionObj = {
+          question: this.question,
+          required: this.required,
+          type: this.questionType,
+          listItems: this.$store.state.items,
+          order: this.questionId
+        };
+        console.log("from update list question", questionObj);
+        $("#createListQuestionModal").modal("hide");
+        this.$store.commit("editQuestion", questionObj);
+        this.$store.commit("tmpQuestion/clear");
+        this.$store.commit("initItems");
+      }
     }
   }
 };

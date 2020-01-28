@@ -16,7 +16,8 @@
         <div class="modal-body">
           <div class="form-group">
             <input
-              v-model="question"
+              :value="question"
+              @input="setQuestion"
               class="form-control"
               id="textQuestionInput"
               required
@@ -28,7 +29,8 @@
               <input
                 class="form-check-input"
                 type="checkbox"
-                v-model="required"
+                :value="required"
+                @change="setRequired"
                 id="isRequiredCheck"
               />
               <label class="form-check-label" for="isRequiredCheck">
@@ -44,8 +46,9 @@
                 type="radio"
                 name="questionType"
                 value="short"
+                @change="setType"
                 id="shortQuestionRadio"
-                checked
+                v-bind="{ checked: type == 'short' ? true : false }"
               />
               <label class="form-check-label" for="shortQuestionRadio">
                 Short Question
@@ -57,6 +60,8 @@
                 type="radio"
                 name="questionType"
                 value="long"
+                @change="setType"
+                v-bind="{ checked: type == 'long' ? true : false }"
                 id="longQuestionRadio"
               />
               <label class="form-check-label" for="longQuestionRadio">
@@ -70,9 +75,19 @@
             type="button"
             class="btn btn-primary"
             data-dismiss="modal"
+            v-show="edited"
+            @click="updateTextQuestion"
+          >
+            Save Changes
+          </button>
+          <button
+            v-show="!edited"
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
             @click="createTextQuestion"
           >
-            Save changes
+            Create question
           </button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Close
@@ -86,37 +101,71 @@
 <script>
 import { getRadioBtnValue } from "../../../modules/helper.js";
 export default {
-  data() {
-    return {
-      question: "",
-      required: false
-    };
-  },
+  props: ["edited", "questionId"],
   computed: {
     order() {
       return this.$store.state.questionId;
+    },
+    question() {
+      return this.$store.state.tmpQuestion.question;
+    },
+    required() {
+      return this.$store.state.tmpQuestion.required;
+    },
+    type() {
+      return this.$store.state.tmpQuestion.type;
     }
   },
   methods: {
+    setQuestion(e) {
+      this.$store.commit("tmpQuestion/setQuestion", e.target.value);
+    },
+    setRequired(e) {
+      console.log("set required", e.target.checked);
+      this.$store.commit("tmpQuestion/setRequired", e.target.checked);
+    },
+    setType(e) {
+      this.$store.commit("tmpQuestion/setType", e.target.value);
+    },
+
     createTextQuestion(e) {
-      if (String(this.question) == null || String(this.question) == "") {
-        alert("Empty Question field");
+      if (this.validateQuestion()) {
+        alert("Empty Question field or question type");
       } else {
-        let type = getRadioBtnValue($("input[name='questionType']"));
         let questionObj = {
           question: this.question,
           required: this.required,
           order: this.order,
-          type: type
+          type: this.type
         };
         this.$store.commit("addQuestion", questionObj);
         this.$store.commit("incrementQuestionId");
-        this.clearModal();
+        this.$store.commit("tmpQuestion/clear");
       }
     },
-    clearModal() {
-      this.question = "";
-      this.required = false;
+    updateTextQuestion() {
+      if (this.validateQuestion()) {
+        alert("Empty Question field or question type");
+      } else {
+        let questionObj = {
+          question: this.question,
+          required: this.required,
+          order: this.questionId,
+          type: this.type
+        };
+        $("#creatTextQuestionModal").modal("hide");
+        console.log("From update text question", questionObj);
+        this.$store.commit("editQuestion", questionObj);
+        this.$store.commit("tmpQuestion/clear");
+      }
+    },
+    validateQuestion() {
+      return (
+        String(this.question) == null ||
+        String(this.question) == "" ||
+        String(this.type) == null ||
+        String(this.type) == ""
+      );
     }
   }
 };

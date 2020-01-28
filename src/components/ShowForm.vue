@@ -6,10 +6,13 @@
       <p v-show="description != ''">{{ description }}</p>
     </section>
     <div class="questions">
-      <form action="#" @submit="submitAnswers(e)">
+      <form action="#" @submit="submitAnswers" method="POST">
         <div v-for="question in questions" :key="question.id">
           <text-question
-            v-if="question.type == 'short' || question.type == 'long'"
+            v-if="
+              question.type == textQuestionTypes[0] ||
+                question.type == textQuestionTypes[1]
+            "
             :question="question.question"
             :type="question.type"
             :isRequired="question.required"
@@ -59,6 +62,7 @@ div.questions {
 import axios from "../../modules/app-axios";
 import TextQuestion from "./subcomponents/questions/TextQuestion";
 import ListQuestion from "./subcomponents/questions/ListQuestion";
+import questionTypes from "../../config/app";
 export default {
   components: {
     TextQuestion,
@@ -68,7 +72,8 @@ export default {
     return {
       title: "",
       description: "",
-      questions: ""
+      questions: "",
+      textQuestionTypes: questionTypes.textQuestionTypes
     };
   },
   async created() {
@@ -79,8 +84,22 @@ export default {
     this.questions = data.questions;
   },
   methods: {
-    submitAnswers(e) {
-      e.preventDefaul();
+    async submitAnswers(e) {
+      e.preventDefault();
+      this.$emit("submit-form");
+      try {
+        let url = "/forms/ " + this.$route.params.formId + "/answers";
+        let data = this.$store.state.answer.answers;
+        let result = await axios.post(url, data);
+        this.$router.push({
+          name: "CreateFormSuccess",
+          params: { message: "Answer submitted successfully" }
+        });
+      } catch (e) {
+        console.error(e);
+        this.$store.commit("error/clearMessages");
+        this.$store.commit("error/setMessage", e);
+      }
     }
   }
 };

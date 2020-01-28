@@ -44,7 +44,19 @@ export default {
   },
   created() {},
   methods: {
-    updateAnswer() {}
+    updateAnswer() {
+      console.log(this.anwser);
+      let payload = {
+        questionId: this.id,
+        answer: this.anwser,
+        type: this.type
+      };
+      if (this.$store.getters["answer/findAnswerByQuestionId"](this.id)) {
+        this.$store.commit("answer/findAndUpdateAnswer", payload);
+      } else {
+        this.$store.commit("answer/pushAnswer", payload);
+      }
+    }
   }
 };
 </script>

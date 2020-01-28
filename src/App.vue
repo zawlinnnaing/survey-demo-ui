@@ -54,7 +54,10 @@ export default {
   created: () => {},
   data: () => {
     return {
-      navArray: [{ name: "CreateForm", title: "Create survey form" }]
+      navArray: [
+        { name: "CreateForm", title: "Create survey form" },
+        { name: "Forms", title: "Forms" }
+      ]
     };
   }
 };

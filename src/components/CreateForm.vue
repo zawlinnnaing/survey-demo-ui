@@ -1,7 +1,13 @@
 <template>
   <div>
-    <create-text-question></create-text-question>
-    <create-list-question></create-list-question>
+    <create-text-question
+      :edited="edited"
+      :questionId="order"
+    ></create-text-question>
+    <create-list-question
+      :edited="edited"
+      :questionId="order"
+    ></create-list-question>
     <div class="form-header">
       <h3>Create Form</h3>
     </div>
@@ -45,6 +51,7 @@
               type="button"
               class="btn"
               data-toggle="modal"
+              @click="createTextQuestion"
               data-target="#creatTextQuestionModal"
             >
               Create Text Questions
@@ -54,7 +61,7 @@
               type="button"
               class="btn"
               data-toggle="modal"
-              data-target="#createListQuestionModal"
+              @click="createListQuestion"
             >
               Create List Questions
             </button>
@@ -69,8 +76,9 @@
         :type="question.type"
         :question="question.question"
         :required="question.required"
-        :items="question.items"
-        :order="index"
+        :items="question.listItems"
+        :order="question.order"
+        @editQuestion="editQuestion"
       ></question>
     </div>
     <div class="buttons-field" v-if="showBtn">
@@ -96,11 +104,22 @@ div.dropdown-menu {
 import CreateTextQuestion from "./modals/CreateTextQuestion";
 import CreateListQuestion from "./modals/CreateListQuestion";
 import Question from "./subcomponents/Question";
+import questionTypes from "../../config/app";
 export default {
   components: {
     CreateTextQuestion,
     CreateListQuestion,
     Question
+  },
+  data() {
+    return {
+      question: "",
+      edited: false,
+      required: false,
+      items: [],
+      type: "",
+      order: 0
+    };
   },
   computed: {
     title() {
@@ -114,6 +133,9 @@ export default {
     },
     showBtn() {
       return this.$store.state.questions.length > 0 ? true : false;
+    },
+    questionId() {
+      return this.$store.state.questionId;
     }
   },
   methods: {
@@ -123,13 +145,43 @@ export default {
     updateDescription(e) {
       this.$store.commit("setDescription", e.target.value);
     },
-    submitForm() {
+    async submitForm() {
       try {
-        this.$store.dispatch("submitForm");
+        await this.$store.dispatch("submitForm");
         this.$store.dispatch("clearForm");
-        this.$router.push({ name: "CreateFormSuccess" });
+        this.$router.push({
+          name: "CreateFormSuccess",
+          params: { message: "Form Created successfully." }
+        });
       } catch (e) {
         alert(e.message);
+      }
+    },
+    createTextQuestion(e) {
+      e.preventDefault();
+      this.clearForQuestion();
+      $("#createTextQuestionModal").modal("show");
+    },
+    createListQuestion(e) {
+      e.preventDefault();
+      this.clearForQuestion();
+      $("#createListQuestionModal").modal("show");
+    },
+    clearForQuestion() {
+      this.question = "";
+      this.required = false;
+      this.items = [];
+      this.type = "";
+      this.order = this.questionId;
+      this.edited = false;
+    },
+    editQuestion(obj) {
+      this.order = obj.order;
+      this.edited = true;
+      if (questionTypes.textQuestionTypes.includes(obj.type)) {
+        $("#creatTextQuestionModal").modal("show");
+      } else {
+        $("#createListQuestionModal").modal("show");
       }
     }
   }

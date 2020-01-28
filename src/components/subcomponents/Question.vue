@@ -44,7 +44,7 @@
     </div>
     <hr />
     <div class="question-footer">
-      <div v-if="required" class="required-text">*Required</div>
+      <div v-if="Boolean(required)" class="required-text">*Required</div>
       <button
         class="btn btn-danger"
         :data-question-id="order"
@@ -52,21 +52,61 @@
       >
         Delete
       </button>
-      <button class="btn btn-secondary">Edit</button>
+      <button
+        class="btn btn-secondary"
+        :data-question-id="order"
+        @click="editQuestion()"
+      >
+        Edit
+      </button>
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script>
 export default {
-  props: ["question", "type", "required", "items", "order"],
+  // props: ["question", "type", "required", "items", "order"],
+  props: ["order"],
+  computed: {
+    questionObj() {
+      console.log(
+        "Changed question obj",
+        this.$store.getters.getQuestionFromOrder(this.order)
+      );
+      return this.$store.getters.getQuestionFromOrder(this.order);
+    },
+    question() {
+      return this.questionObj.question;
+    },
+    type() {
+      return this.questionObj.type;
+    },
+    required() {
+      return this.questionObj.required;
+    },
+    items() {
+      return this.questionObj.listItems;
+    }
+  },
   methods: {
     deleteQuestion(index) {
       this.$store.commit("deleteQuestion", index);
+    },
+    editQuestion() {
+      let questionObj = {
+        question: this.question,
+        type: this.type,
+        required: this.required,
+        items: this.items,
+        order: this.order
+      };
+      if (this.items && this.items.length > 0) {
+        this.$store.commit("setItems", this.items);
+      }
+      this.$store.commit("tmpQuestion/setObj", questionObj);
+      this.$emit("editQuestion", questionObj);
     }
   }
 };
