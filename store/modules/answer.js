@@ -22,6 +22,19 @@ export const answer = {
       }
       state.answers.push(obj);
     },
+    populateAnswers(state, questions) {
+      state.answers = [];
+      questions.forEach(ele => {
+        let obj = {};
+        obj.questionId = ele.id;
+        if (questionTypes.listQuestionTypes.includes(ele.type)) {
+          obj.listAnswers = [];
+        } else {
+          obj.textAnswer = "";
+        }
+        state.answers.push(obj);
+      });
+    },
     findAndUpdateAnswer(state, payload) {
       state.answers.forEach(ele => {
         if (ele.questionId == payload.questionId) {

@@ -70,7 +70,7 @@ export default new Vuex.Store({
       let index = state.questions.findIndex(
         ele => ele.order == questionObj.order
       );
-      console.log("from edit question", questionObj);
+      // console.log("from edit question", questionObj);
       state.questions.splice(index, 1, questionObj);
     },
     deleteItemFromItems(state, index) {

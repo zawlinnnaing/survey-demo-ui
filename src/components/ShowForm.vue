@@ -79,6 +79,7 @@ export default {
   async created() {
     let url = "/forms/" + this.$route.params.formId;
     let { data } = await axios.get(url);
+    this.$store.commit("answer/populateAnswers", data.questions);
     this.title = data.title;
     this.description = data.description;
     this.questions = data.questions;
@@ -91,14 +92,15 @@ export default {
         let url = "/forms/ " + this.$route.params.formId + "/answers";
         let data = this.$store.state.answer.answers;
         let result = await axios.post(url, data);
+        console.log(result);
         this.$router.push({
           name: "CreateFormSuccess",
           params: { message: "Answer submitted successfully" }
         });
       } catch (e) {
-        console.error(e);
         this.$store.commit("error/clearMessages");
-        this.$store.commit("error/setMessage", e);
+        this.$store.commit("error/setMessage", e.message);
+        alert("Form submission failed");
       }
     }
   }

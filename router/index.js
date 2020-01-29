@@ -5,6 +5,8 @@ import CreateForm from "../src/components/CreateForm";
 import CreateFormSuccess from "../src/components/CreateFormSuccess";
 import ShowForm from "../src/components/ShowForm";
 import Forms from "../src/components/Forms";
+import ShowChart from "../src/components/ShowChart";
+
 Vue.use(Router);
 
 export default new Router({
@@ -34,6 +36,11 @@ export default new Router({
       path: "/forms",
       component: Forms,
       name: "Forms"
+    },
+    {
+      path: "/chart/:formId",
+      component: ShowChart,
+      name: "ShowChart"
     }
   ]
 });

@@ -9,7 +9,7 @@
           <input
             class="form-control"
             v-bind="{ required: isRequired }"
-            v-model="anwser"
+            v-model="answer"
             @input="updateAnswer"
             placeholder="Enter short answer"
           />
@@ -39,16 +39,15 @@ export default {
   props: ["question", "type", "isRequired", "id"],
   data() {
     return {
-      anwser: ""
+      answer: ""
     };
   },
   created() {},
   methods: {
     updateAnswer() {
-      console.log(this.anwser);
       let payload = {
         questionId: this.id,
-        answer: this.anwser,
+        answer: this.answer,
         type: this.type
       };
       if (this.$store.getters["answer/findAnswerByQuestionId"](this.id)) {

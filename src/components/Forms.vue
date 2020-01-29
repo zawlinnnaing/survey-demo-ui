@@ -16,6 +16,9 @@
             <router-link :to="{ name: 'ShowForm', params: { formId: form.id } }"
               >Show Form</router-link
             >
+            <router-link
+              :to="{ name: 'ShowChart', params: { formId: form.id } }"
+            >Show Chart</router-link>
             <a
               :href="server_url + '/analytics/' + form.id"
               class="badge badge-primary"

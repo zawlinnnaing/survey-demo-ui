@@ -154,7 +154,8 @@ export default {
           params: { message: "Form Created successfully." }
         });
       } catch (e) {
-        alert(e.message);
+        console.log(e);
+        alert(e.data.message);
       }
     },
     createTextQuestion(e) {
