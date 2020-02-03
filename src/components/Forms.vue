@@ -57,7 +57,7 @@ export default {
     };
   },
   async created() {
-    let url = VUE_APP_SERVER_URL + "/forms";
+    let url = process.env.VUE_APP_SERVER_URL + "/forms";
     let { data } = await axios.get(url);
     this.forms = data;
     this.server_url = process.env.VUE_APP_SERVER_URL;
