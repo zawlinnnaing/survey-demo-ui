@@ -18,7 +18,8 @@
             >
             <router-link
               :to="{ name: 'ShowChart', params: { formId: form.id } }"
-            >Show Chart</router-link>
+              >Show Chart</router-link
+            >
             <a
               :href="server_url + '/analytics/' + form.id"
               class="badge badge-primary"
@@ -56,7 +57,8 @@ export default {
     };
   },
   async created() {
-    let { data } = await axios.get("/forms");
+    let url = VUE_APP_SERVER_URL + "/forms";
+    let { data } = await axios.get(url);
     this.forms = data;
     this.server_url = process.env.VUE_APP_SERVER_URL;
   }
