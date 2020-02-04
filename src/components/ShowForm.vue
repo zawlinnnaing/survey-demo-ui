@@ -6,7 +6,7 @@
       <p v-show="description != ''">{{ description }}</p>
     </section>
     <div class="questions">
-      <form action="#" @submit:prevent="submitAnswers" method="POST">
+      <form action="#" @submit="submitAnswers" method="POST">
         <div v-for="question in questions" :key="question.id">
           <text-question
             v-if="
