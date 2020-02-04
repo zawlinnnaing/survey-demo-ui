@@ -44,13 +44,9 @@
 </template>
 
 <script>
-import CreateForm from "./components/CreateForm";
-
 export default {
   name: "app",
-  components: {
-    CreateForm
-  },
+  components: {},
   created: () => {},
   data: () => {
     return {

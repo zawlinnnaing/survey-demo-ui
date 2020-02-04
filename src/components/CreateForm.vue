@@ -70,16 +70,19 @@
       </div>
     </div>
     <div class="questions-field">
-      <question
-        v-for="(question, index) in questions"
-        :key="index"
-        :type="question.type"
-        :question="question.question"
-        :required="question.required"
-        :items="question.listItems"
-        :order="question.order"
-        @editQuestion="editQuestion"
-      ></question>
+      <draggable :value="questions" draggable=".question" @end="sortQuestion">
+        <question
+          v-for="(question, index) in questions"
+          class="question"
+          :key="index"
+          :type="question.type"
+          :question="question.question"
+          :required="question.required"
+          :items="question.listItems"
+          :order="question.order"
+          @editQuestion="editQuestion"
+        ></question>
+      </draggable>
     </div>
     <div class="buttons-field" v-if="showBtn">
       <button class="btn btn-primary " @click="submitForm">Create Form</button>
@@ -105,11 +108,13 @@ import CreateTextQuestion from "./modals/CreateTextQuestion";
 import CreateListQuestion from "./modals/CreateListQuestion";
 import Question from "./subcomponents/Question";
 import questionTypes from "../../config/app";
+import draggable from "vuedraggable";
 export default {
   components: {
     CreateTextQuestion,
     CreateListQuestion,
-    Question
+    Question,
+    draggable
   },
   data() {
     return {
@@ -128,8 +133,10 @@ export default {
     description() {
       return this.$store.state.description;
     },
-    questions() {
-      return this.$store.state.questions;
+    questions: {
+      get() {
+        return this.$store.state.questions;
+      }
     },
     showBtn() {
       return this.$store.state.questions.length > 0 ? true : false;
@@ -154,9 +161,16 @@ export default {
           params: { message: "Form Created successfully." }
         });
       } catch (e) {
-        console.log(e);
+        console.error(e);
         alert(e.data.message);
       }
+    },
+    sortQuestion(evt) {
+      let payload = {
+        oldIndex: evt.oldIndex,
+        newIndex: evt.newIndex
+      };
+      this.$store.commit("moveQuestions", payload);
     },
     createTextQuestion(e) {
       e.preventDefault();

@@ -74,7 +74,6 @@ export default {
     };
   },
   async created() {
-    console.log(this.listQuestionTypes);
     let url =
       process.env.VUE_APP_SERVER_URL +
       "/analytics/data/" +

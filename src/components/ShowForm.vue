@@ -92,7 +92,6 @@ export default {
         let url = "/forms/ " + this.$route.params.formId + "/answers";
         let data = this.$store.state.answer.answers;
         let result = await axios.post(url, data);
-        console.log(result);
         this.$router.push({
           name: "CreateFormSuccess",
           params: { message: "Answer submitted successfully" }

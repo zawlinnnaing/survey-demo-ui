@@ -99,7 +99,6 @@ export default {
       this.pushAnswer(payload);
     },
     pushAnswer(payload) {
-      console.log(this.$store.getters);
       if (this.$store.getters["answer/findAnswerByQuestionId"](this.id)) {
         this.$store.commit("answer/findAndUpdateAnswer", payload);
       } else {
@@ -110,10 +109,10 @@ export default {
   created() {
     this.$parent.$on("submit-form", () => {
       if (this.isRequired && this.listAnswers.length <= 0) {
+        alert(`Answer for question ${this.question} has not been submitted.`);
         throw new Error(
           `Answer for question ${this.question} has not been submitted.`
         );
-        alert(`Answer for question ${this.question} has not been submitted.`);
       }
     });
   }

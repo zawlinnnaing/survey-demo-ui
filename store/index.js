@@ -60,6 +60,13 @@ export default new Vuex.Store({
     setItems(state, items) {
       state.items = items;
     },
+    moveQuestions(state, payload) {
+      state.questions.splice(
+        payload.newIndex,
+        0,
+        state.questions.splice(payload.oldIndex, 1)[0]
+      );
+    },
     editItems(state, payload) {
       state.items[payload.index] = {
         itemName: payload.itemName,
