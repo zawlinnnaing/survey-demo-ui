@@ -75,12 +75,8 @@
           v-for="(question, index) in questions"
           class="question"
           :key="index"
-          :type="question.type"
-          :question="question.question"
-          :required="question.required"
-          :items="question.listItems"
-          :order="index"
-          @editQuestion="editQuestion(question)"
+          :order="question.order"
+          @editQuestion="editQuestion"
         ></question>
       </draggable>
     </div>

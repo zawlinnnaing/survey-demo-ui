@@ -42,13 +42,13 @@
       <div class="form-group" v-else>
         <select
           v-model="answer"
-          v-for="item in items"
-          @change="updateSingleAnser"
-          :key="item.id"
+          @change="updateSingleAnswer"
           v-bind="{ required: isRequired }"
         >
           <option value=""> --- ---- </option>
-          <option :value="item.id">{{ item.itemName }}</option>
+          <option v-for="item in items" :key="item.id" :value="item.id">{{
+            item.itemName
+          }}</option>
           ></select
         >
       </div>
@@ -107,14 +107,14 @@ export default {
     }
   },
   created() {
-    this.$parent.$on("submit-form", () => {
-      if (this.isRequired && this.listAnswers.length <= 0) {
-        alert(`Answer for question ${this.question} has not been submitted.`);
-        throw new Error(
-          `Answer for question ${this.question} has not been submitted.`
-        );
-      }
-    });
+    // this.$parent.$on("submit-form", () => {
+    //   if (this.isRequired && this.listAnswers.length <= 0) {
+    //     alert(`Answer for question ${this.question} has not been submitted.`);
+    //     throw new Error(
+    //       `Answer for question ${this.question} has not been submitted.`
+    //     );
+    //   }
+    // });
   }
 };
 </script>

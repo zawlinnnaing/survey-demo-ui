@@ -80,7 +80,6 @@ export default new Vuex.Store({
       let index = state.questions.findIndex(
         ele => ele.order == questionObj.order
       );
-      // console.log("from edit question", questionObj);
       state.questions.splice(index, 1, questionObj);
     },
     deleteItemFromItems(state, index) {
@@ -96,7 +95,8 @@ export default new Vuex.Store({
         question.order = index;
       });
     },
-    deleteQuestion(state, index) {
+    deleteQuestion(state, order) {
+      let index = state.questions.findIndex(ele => ele.order == order);
       state.questions.splice(index, 1);
     },
     clearForm(state) {

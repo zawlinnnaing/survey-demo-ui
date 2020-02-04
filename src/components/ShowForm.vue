@@ -89,8 +89,8 @@ export default {
   methods: {
     async submitAnswers(e) {
       e.preventDefault();
-      this.$emit("submit-form");
       try {
+        this.$emit("submit-form");
         let url = "/forms/ " + this.$route.params.formId + "/answers";
         let data = this.$store.state.answer.answers;
         let result = await axios.post(url, data);

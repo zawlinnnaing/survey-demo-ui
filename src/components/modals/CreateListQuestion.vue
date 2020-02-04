@@ -29,8 +29,7 @@
                 class="form-check-input"
                 id="listQuestionRequired"
                 type="checkbox"
-                :value="required"
-                @change="setRequired"
+                v-model="required"
               />
               <label for="listQuestionRequired" class="form-check-label"
                 >Required ?
@@ -115,6 +114,9 @@ export default {
     };
   },
   computed: {
+    order() {
+      return this.$store.state.questionId;
+    },
     items() {
       return this.$store.state.items;
     },
@@ -124,8 +126,13 @@ export default {
     questionType() {
       return this.$store.state.tmpQuestion.type;
     },
-    required() {
-      return this.$store.state.tmpQuestion.required;
+    required: {
+      get() {
+        return this.$store.state.tmpQuestion.required;
+      },
+      set(value) {
+        this.$store.commit("tmpQuestion/setRequired", value);
+      }
     }
   },
   created() {
@@ -136,7 +143,9 @@ export default {
       this.$store.commit("tmpQuestion/setQuestion", e.target.value);
     },
     setRequired(e) {
+      console.log(" before setting to store", e.target.value);
       this.$store.commit("tmpQuestion/setRequired", e.target.value);
+      console.log(" before setting to store", e.target.value);
     },
     setType(e) {
       this.$store.commit("tmpQuestion/setType", e.target.value);
@@ -168,9 +177,11 @@ export default {
           question: this.question,
           required: this.required,
           type: this.questionType,
-          listItems: this.$store.state.items
+          listItems: this.$store.state.items,
+          order: this.order
         };
         console.log("from create list question", questionObj);
+        this.$store.commit("incrementQuestionId");
         this.$store.commit("addQuestion", questionObj);
         this.$store.commit("tmpQuestion/clear");
         this.$store.commit("initItems");
@@ -185,7 +196,7 @@ export default {
           question: this.question,
           required: this.required,
           type: this.questionType,
-          listItems: this.$store.state.items,
+          listItems: this.items,
           order: this.questionId
         };
         // console.log("from update list question", questionObj);

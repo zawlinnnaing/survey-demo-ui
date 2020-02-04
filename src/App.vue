@@ -8,9 +8,9 @@
     />
     <link rel="stylesheet" href="/style/app.css" />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
+      <router-link class="navbar-brand" :to="{}">
         <img src="./assets/logo.png" width="150" height="50" />
-      </a>
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"

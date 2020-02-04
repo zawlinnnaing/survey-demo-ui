@@ -13,6 +13,7 @@ export default {
       state.question = value;
     },
     setRequired(state, value) {
+      console.log("from set required :", value);
       state.required = value;
     },
     setItems(state, item) {
