@@ -159,7 +159,12 @@ export default {
         });
       } catch (e) {
         console.error(e);
-        alert(e.data.message);
+        this.$store.commit("error/clearMessages");
+        this.$store.commit("error/setMessage", "form submittion failed. ");
+        this.$router.push({
+          name: "Errors"
+        });
+        // alert(e.data.message);
       }
     },
     sortQuestion(evt) {
