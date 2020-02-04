@@ -6,6 +6,7 @@ import CreateFormSuccess from "../src/components/CreateFormSuccess";
 import ShowForm from "../src/components/ShowForm";
 import Forms from "../src/components/Forms";
 import ShowChart from "../src/components/ShowChart";
+import ErrorComponent from "../src/components/Error";
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
       path: "/chart/:formId",
       component: ShowChart,
       name: "ShowChart"
+    },
+    {
+      path: "/errors",
+      component: ErrorComponent,
+      name: "Errors"
     }
   ]
 });
