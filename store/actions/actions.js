@@ -1,4 +1,4 @@
-import axios from "../modules/app-axios";
+import axios from "../../modules/app-axios";
 
 export default {
   async submitForm(context) {

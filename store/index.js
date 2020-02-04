@@ -1,9 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import actions from "./actions";
+import actions from "./actions/actions";
 import { answer } from "./modules/answer";
 import tmpQuestion from "./modules/tmpQuestion";
+import questionMutations from "./mutations/question-mutations";
 import error from "./modules/error";
+import itemMutations from "./mutations/item-mutations";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -35,70 +37,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    ...questionMutations,
+    ...itemMutations,
     setTitle(state, newValue) {
       state.title = newValue;
     },
     setDescription(state, newValue) {
       state.description = newValue;
     },
-    addQuestion(state, newValue) {
-      state.questions.push(newValue);
-    },
-    incrementQuestionId(state) {
-      state.questionId++;
-    },
-    resetQuestionId(state) {
-      state.questionId = 0;
-    },
-    pushItem(state, item) {
-      state.items.push(item);
-    },
-    initItems(state) {
-      state.items = [
-        {
-          itemName: "New Option"
-        }
-      ];
-    },
-    setItems(state, items) {
-      state.items = items;
-    },
-    moveQuestions(state, payload) {
-      state.questions.splice(
-        payload.newIndex,
-        0,
-        state.questions.splice(payload.oldIndex, 1)[0]
-      );
-    },
-    editItems(state, payload) {
-      state.items[payload.index] = {
-        itemName: payload.itemName,
-        order: payload.index
-      };
-    },
-    editQuestion(state, questionObj) {
-      let index = state.questions.findIndex(
-        ele => ele.order == questionObj.order
-      );
-      state.questions.splice(index, 1, questionObj);
-    },
-    deleteItemFromItems(state, index) {
-      state.items.splice(index, 1);
-    },
-    reorderItems(state) {
-      state.items.forEach((item, index) => {
-        item.order = index;
-      });
-    },
-    reorderQuestions(state) {
-      state.questions.forEach((question, index) => {
-        question.order = index;
-      });
-    },
-    deleteQuestion(state, order) {
-      let index = state.questions.findIndex(ele => ele.order == order);
-      state.questions.splice(index, 1);
-    },
+
     clearForm(state) {
       state.questions = [];
       state.questionId = 0;
