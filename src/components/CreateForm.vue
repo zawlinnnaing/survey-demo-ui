@@ -79,8 +79,8 @@
           :question="question.question"
           :required="question.required"
           :items="question.listItems"
-          :order="question.order"
-          @editQuestion="editQuestion"
+          :order="index"
+          @editQuestion="editQuestion(question)"
         ></question>
       </draggable>
     </div>
@@ -145,6 +145,7 @@ export default {
       return this.$store.state.questionId;
     }
   },
+  created() {},
   methods: {
     updateTitle(e) {
       this.$store.commit("setTitle", e.target.value);

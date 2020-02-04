@@ -73,9 +73,9 @@ export default {
     questionObj() {
       console.log(
         "Changed question obj",
-        this.$store.getters.getQuestionFromOrder(this.order)
+        this.$store.getters.getQuestionFromIndex(this.order)
       );
-      return this.$store.getters.getQuestionFromOrder(this.order);
+      return this.$store.getters.getQuestionFromIndex(this.order);
     },
     question() {
       return this.questionObj.question;

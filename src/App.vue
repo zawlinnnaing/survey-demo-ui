@@ -47,7 +47,9 @@
 export default {
   name: "app",
   components: {},
-  created: () => {},
+  created: () => {
+    
+  },
   data: () => {
     return {
       navArray: [

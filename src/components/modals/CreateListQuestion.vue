@@ -1,6 +1,6 @@
 <template>
   <div class="modal" tabindex="-1" role="dialog" id="createListQuestionModal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Create List Question</h5>
@@ -188,7 +188,7 @@ export default {
           listItems: this.$store.state.items,
           order: this.questionId
         };
-        console.log("from update list question", questionObj);
+        // console.log("from update list question", questionObj);
         $("#createListQuestionModal").modal("hide");
         this.$store.commit("editQuestion", questionObj);
         this.$store.commit("tmpQuestion/clear");

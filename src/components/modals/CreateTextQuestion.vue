@@ -1,6 +1,6 @@
 <template>
   <div class="modal" tabindex="-1" role="dialog" id="creatTextQuestionModal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered " role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Create Text Question</h5>
@@ -154,7 +154,7 @@ export default {
           type: this.type
         };
         $("#creatTextQuestionModal").modal("hide");
-        console.log("From update text question", questionObj);
+        // console.log("From update text question", questionObj);
         this.$store.commit("editQuestion", questionObj);
         this.$store.commit("tmpQuestion/clear");
       }

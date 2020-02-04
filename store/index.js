@@ -29,6 +29,9 @@ export default new Vuex.Store({
     },
     getQuestionFromOrder: state => order => {
       return state.questions.find(ele => ele.order == order);
+    },
+    getQuestionFromIndex: state => index => {
+      return state.questions[index];
     }
   },
   mutations: {
