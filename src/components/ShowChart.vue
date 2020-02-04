@@ -74,10 +74,7 @@ export default {
     };
   },
   async created() {
-    let url =
-      process.env.VUE_APP_SERVER_URL +
-      "/analytics/data/" +
-      this.$route.params.formId;
+    let url = "/analytics/data/" + this.$route.params.formId;
     let { data } = await axios.get(url);
 
     this.result = data;

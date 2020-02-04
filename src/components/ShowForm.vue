@@ -6,7 +6,7 @@
       <p v-show="description != ''">{{ description }}</p>
     </section>
     <div class="questions">
-      <form action="#" @submit="submitAnswers" method="POST">
+      <form action="#" @submit:prevent="submitAnswers" method="POST">
         <div v-for="question in questions" :key="question.id">
           <text-question
             v-if="
@@ -36,7 +36,9 @@
             <button type="submit" class="btn btn-primary">Submit Answer</button>
           </div>
           <div class="btn-group">
-            <button type="cancel" class="btn btn-secondary">Cancel</button>
+            <button type="cancel" class="btn btn-secondary" @click="goBack">
+              Cancel
+            </button>
           </div>
         </div>
       </form>
@@ -101,6 +103,9 @@ export default {
         this.$store.commit("error/setMessage", e.message);
         alert("Form submission failed");
       }
+    },
+    goBack() {
+      this.$router.go(-1);
     }
   }
 };
