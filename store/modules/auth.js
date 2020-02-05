@@ -29,6 +29,7 @@ export default {
         commit("setEmail", res.data.email);
       } catch (error) {
         console.error(error);
+        throw e;
       }
     },
     async logoutUser({ commit }) {
@@ -39,6 +40,7 @@ export default {
         commit("setEmail", "");
       } catch (e) {
         console.log(e);
+        throw e;
       }
     },
     async loginUser({ commit }, payload) {
@@ -50,6 +52,7 @@ export default {
         commit("setEmail", data.email);
       } catch (e) {
         console.log(e);
+        throw e;
       }
     }
   }

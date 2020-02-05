@@ -78,9 +78,7 @@ export default {
       textQuestionTypes: questionTypes.textQuestionTypes
     };
   },
-  computed: {
-    
-  },
+  computed: {},
   async created() {
     let url = "/forms/" + this.$route.params.formId;
     let { data } = await axios.get(url);
@@ -105,6 +103,7 @@ export default {
         this.$store.commit("error/clearMessages");
         this.$store.commit("error/setMessage", e.message);
         alert("Form submission failed");
+        return;
       }
     },
     goBack() {

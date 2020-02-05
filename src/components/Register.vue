@@ -90,8 +90,13 @@ export default {
         name: this.name,
         password: this.password
       };
-      await this.$store.dispatch("registerUser", data);
-      
+      try {
+        await this.$store.dispatch("registerUser", data);
+      } catch (e) {
+        alert("Registration failed");
+        console.error(e);
+        return;
+      }
     }
   }
 };

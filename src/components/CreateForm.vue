@@ -164,6 +164,7 @@ export default {
         this.$router.push({
           name: "Errors"
         });
+        return;
         // alert(e.data.message);
       }
     },

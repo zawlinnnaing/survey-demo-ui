@@ -16,6 +16,7 @@
           type="text"
           id="login"
           v-model="email"
+          required
           class="fadeIn second"
           name="login"
           placeholder="Email"
@@ -24,6 +25,7 @@
           type="password"
           id="password"
           class="fadeIn third"
+          required
           v-model="password"
           name="login"
           placeholder="password"
@@ -64,7 +66,7 @@ export default {
         await this.$store.dispatch("loginUser", payload);
         this.$router.push({ name: "Home" });
       } catch (e) {
-        alert(e);
+        alert("Login Failed ");
         console.error(e);
         return;
       }
