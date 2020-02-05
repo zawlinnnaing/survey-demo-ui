@@ -6,4 +6,8 @@ axios.defaults.baseURL = process.env.VUE_APP_SERVER_URL;
 console.log(axios.defaults.baseURL);
 axios.defaults.withCredentials = true;
 
+axios.setAuthorizationHeader = token => {
+  axios.defaults.headers.Authorization = `Bearer ${token}`;
+};
+
 export default axios;

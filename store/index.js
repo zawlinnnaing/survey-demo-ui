@@ -1,17 +1,19 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import actions from "./actions/actions";
 import { answer } from "./modules/answer";
 import tmpQuestion from "./modules/tmpQuestion";
-import questionMutations from "./mutations/question-mutations";
 import error from "./modules/error";
+import auth from "./modules/auth";
+
+import actions from "./actions/actions";
+import questionMutations from "./mutations/question-mutations";
 import itemMutations from "./mutations/item-mutations";
 Vue.use(Vuex);
-
 export default new Vuex.Store({
   modules: {
     answer,
     error,
+    auth,
     tmpQuestion
   },
   state: {

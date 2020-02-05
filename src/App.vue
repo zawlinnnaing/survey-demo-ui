@@ -11,28 +11,36 @@
       <router-link class="navbar-brand" :to="{}">
         <img src="./assets/logo.png" width="150" height="50" />
       </router-link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarColor02"
-        aria-controls="navbarColor02"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
       <div class="collapse navbar-collapse" id="navbarColor02">
-        <ul
-          class="navbar-nav mr-auto"
-          v-for="(index, id) in navArray"
-          :key="id"
-        >
-          <li class="nav-item ">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item " v-for="(index, id) in navArray" :key="id">
             <router-link :to="{ name: index.name }" class="nav-link">{{
               index.title
             }}</router-link>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              v-if="!loggedIn"
+              :to="{ name: 'Login' }"
+              >Login</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              v-if="!loggedIn"
+              :to="{ name: 'Register' }"
+              >Register</router-link
+            >
+          </li>
+          <li class="nav-item" v-if="loggedIn">
+            <p class="nav-link">{{ adminName }}</p>
+          </li>
+          <li class="nav-item" v-if="loggedIn">
+            <a class="nav-link" @click="logoutAdmin">Logout</a>
           </li>
         </ul>
       </div>
@@ -46,10 +54,16 @@
 <script>
 export default {
   name: "app",
-  components: {},
-  created: () => {
-    
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    },
+    adminName() {
+      return this.$store.state.auth.name;
+    }
   },
+  components: {},
+  created: () => {},
   data: () => {
     return {
       navArray: [
@@ -57,6 +71,19 @@ export default {
         { name: "Forms", title: "Forms" }
       ]
     };
+  },
+  methods: {
+    async logoutAdmin() {
+      try {
+        await this.$store.dispatch("logoutUser");
+        alert("Logout suceessfully.");
+        this.$router.push({ name: "Login" });
+      } catch (e) {
+        alert(e);
+        console.error(e);
+        return;
+      }
+    }
   }
 };
 </script>

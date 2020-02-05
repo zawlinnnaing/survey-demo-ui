@@ -75,10 +75,15 @@ export default {
   },
   async created() {
     let url = "/analytics/data/" + this.$route.params.formId;
-    let { data } = await axios.get(url);
-
-    this.result = data;
-    this.loaded = true;
+    try {
+      let { data } = await axios.get(url);
+      this.result = data;
+      this.loaded = true;
+    } catch (e) {
+      console.error(e);
+      alert("Something went wrong.");
+      return;
+    }
     // console.log(this.result);
   }
 };

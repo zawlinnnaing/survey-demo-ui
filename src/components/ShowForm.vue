@@ -78,6 +78,9 @@ export default {
       textQuestionTypes: questionTypes.textQuestionTypes
     };
   },
+  computed: {
+    
+  },
   async created() {
     let url = "/forms/" + this.$route.params.formId;
     let { data } = await axios.get(url);

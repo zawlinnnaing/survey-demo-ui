@@ -18,10 +18,12 @@
             >
             <router-link
               :to="{ name: 'ShowChart', params: { formId: form.id } }"
+              v-show="loggedIn"
               >Show Chart</router-link
             >
             <a
               :href="server_url + '/analytics/' + form.id"
+              v-show="loggedIn"
               class="badge badge-primary"
               target="blank"
               >Download answers</a
@@ -55,6 +57,11 @@ export default {
       forms: [],
       server_url: ""
     };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    }
   },
   async created() {
     let url = process.env.VUE_APP_SERVER_URL + "/forms";

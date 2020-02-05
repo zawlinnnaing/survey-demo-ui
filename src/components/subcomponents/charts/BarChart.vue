@@ -19,7 +19,7 @@ export default {
     },
     backgroundColors() {
       return this.chartData.listItems.map(ele => {
-        return randomColorRgba();
+        return "rgba(86, 186, 237, 1)";
       });
     }
   },
