@@ -7,7 +7,7 @@
       href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css"
     />
     <link rel="stylesheet" href="/style/app.css" />
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <router-link class="navbar-brand" :to="{}">
         <img src="./assets/logo.png" width="150" height="50" />
       </router-link>
@@ -94,7 +94,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 60px;
+}
+nav {
+  position: sticky !important;
+  top: 0;
+  z-index: 100;
+  background-color: #e3f2fd;
+  box-shadow: 4px 2px 4px #757575;
 }
 body {
   background-color: #f5f5f5 !important;
