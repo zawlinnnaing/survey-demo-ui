@@ -24,7 +24,8 @@ export default new Router({
     {
       path: "/",
       name: "Home",
-      component: Forms
+      component: Forms,
+      beforeEnter: authMiddleware
     },
     {
       path: "/login",
