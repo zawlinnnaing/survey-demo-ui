@@ -34,40 +34,6 @@
           cols="15"
         ></textarea>
       </div>
-      <!-- <div class="button-group">
-        <div class="dropdown">
-          <button
-            class="btn btn-primary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Create Questions
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button
-              type="button"
-              class="btn"
-              data-toggle="modal"
-              @click="createTextQuestion"
-              data-target="#creatTextQuestionModal"
-            >
-              Create Text Questions
-            </button>
-            <hr />
-            <button
-              type="button"
-              class="btn"
-              data-toggle="modal"
-              @click="createListQuestion($event)"
-            >
-              Create List Questions
-            </button>
-          </div>
-        </div>
-      </div> -->
     </div>
     <div class="questions-field">
       <draggable :value="questions" draggable=".question" @end="sortQuestion">
