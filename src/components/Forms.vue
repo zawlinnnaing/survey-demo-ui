@@ -22,7 +22,7 @@
               >Show Chart</router-link
             >
             <a
-              :href="server_url + '/analytics/' + form.id"
+              :href="server_url + '/charts/' + form.id"
               v-show="loggedIn"
               class="badge badge-primary"
               target="blank"

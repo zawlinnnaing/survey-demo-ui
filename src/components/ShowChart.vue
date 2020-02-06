@@ -74,7 +74,7 @@ export default {
     };
   },
   async created() {
-    let url = "/analytics/data/" + this.$route.params.formId;
+    let url = "/charts/data/" + this.$route.params.formId;
     try {
       let { data } = await axios.get(url);
       this.result = data;
