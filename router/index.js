@@ -32,12 +32,12 @@ export default new Router({
       component: Login,
       beforeEnter: guestMiddleware
     },
-    {
-      path: "/register",
-      name: "Register",
-      component: Register,
-      beforeEnter: guestMiddleware
-    },
+    // {
+    //   path: "/register",
+    //   name: "Register",
+    //   component: Register,
+    //   beforeEnter: guestMiddleware
+    // },
     {
       path: "/create-form",
       name: "CreateForm",
@@ -58,7 +58,8 @@ export default new Router({
     {
       path: "/forms",
       component: Forms,
-      name: "Forms"
+      name: "Forms",
+      beforeEnter: authMiddleware
     },
     {
       path: "/chart/:formId",

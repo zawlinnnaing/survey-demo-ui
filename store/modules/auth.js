@@ -29,7 +29,7 @@ export default {
         commit("setEmail", res.data.email);
       } catch (error) {
         console.error(error);
-        throw e;
+        throw error;
       }
     },
     async logoutUser({ commit }) {

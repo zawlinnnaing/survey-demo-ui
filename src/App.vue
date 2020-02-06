@@ -28,14 +28,14 @@
               >Login</router-link
             >
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link
               class="nav-link"
               v-if="!loggedIn"
               :to="{ name: 'Register' }"
               >Register</router-link
             >
-          </li>
+          </li> -->
           <li class="nav-item" v-if="loggedIn">
             <p class="nav-link">{{ adminName }}</p>
           </li>
