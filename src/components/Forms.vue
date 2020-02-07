@@ -1,5 +1,6 @@
 <template>
   <div class="forms">
+    <success-modal :message="message"></success-modal>
     <table class="table">
       <thead>
         <tr>
@@ -58,10 +59,15 @@ tr :last-child a {
 
 <script>
 import axios from "../../modules/app-axios.js";
+import SuccessModal from "./modals/successModal";
 export default {
+  components: {
+    SuccessModal
+  },
   data() {
     return {
-      server_url: ""
+      server_url: "",
+      message: ""
     };
   },
   computed: {
@@ -85,6 +91,8 @@ export default {
     async deleteForm(formId) {
       try {
         await this.$store.dispatch("form/deleteForm", formId);
+        this.message = "Form deleted successfully.";
+        $("#successModal").modal("show");
       } catch (e) {
         alert("Failed to delete form.");
         return;
