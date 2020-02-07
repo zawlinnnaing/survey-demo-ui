@@ -90,9 +90,11 @@ export default {
   methods: {
     async deleteForm(formId) {
       try {
-        await this.$store.dispatch("form/deleteForm", formId);
-        this.message = "Form deleted successfully.";
-        $("#successModal").modal("show");
+        if (confirm("Are you sure ?")) {
+          await this.$store.dispatch("form/deleteForm", formId);
+          this.message = "Form deleted successfully.";
+          $("#successModal").modal("show");
+        }
       } catch (e) {
         alert("Failed to delete form.");
         return;

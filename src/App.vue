@@ -100,6 +100,12 @@ nav {
   background-color: #e3f2fd;
   box-shadow: 4px 2px 4px #757575;
 }
+.nav-link {
+  color: #424242;
+}
+.nav-link:hover {
+  color: #03a9f4 !important;
+}
 body {
   background-color: #f5f5f5 !important;
 }
