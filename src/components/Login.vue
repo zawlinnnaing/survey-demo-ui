@@ -63,7 +63,7 @@ export default {
         password: this.password
       };
       try {
-        await this.$store.dispatch("loginUser", payload);
+        await this.$store.dispatch("auth/loginUser", payload);
         this.$router.push({ name: "Home" });
       } catch (e) {
         alert("Login Failed ");

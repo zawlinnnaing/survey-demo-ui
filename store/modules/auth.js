@@ -1,7 +1,7 @@
 import axios from "../../modules/app-axios";
 
 export default {
-  namespace: true,
+  namespaced: true,
   state: {
     loggedIn: false,
     name: "",

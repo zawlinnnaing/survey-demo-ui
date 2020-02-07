@@ -68,7 +68,6 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("auth");
 export default {
   data() {
     return {
@@ -91,7 +90,7 @@ export default {
         password: this.password
       };
       try {
-        await this.$store.dispatch("registerUser", data);
+        await this.$store.dispatch("auth/registerUser", data);
       } catch (e) {
         alert("Registration failed");
         console.error(e);

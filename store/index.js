@@ -4,6 +4,7 @@ import { answer } from "./modules/answer";
 import tmpQuestion from "./modules/tmpQuestion";
 import error from "./modules/error";
 import auth from "./modules/auth";
+import form from "./modules/form";
 
 import actions from "./actions/actions";
 import questionMutations from "./mutations/question-mutations";
@@ -14,7 +15,8 @@ export default new Vuex.Store({
     answer,
     error,
     auth,
-    tmpQuestion
+    tmpQuestion,
+    form
   },
   state: {
     title: "",

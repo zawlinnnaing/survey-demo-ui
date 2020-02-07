@@ -14,13 +14,20 @@
           <td>{{ form.description }}</td>
           <td>
             <router-link :to="{ name: 'ShowForm', params: { formId: form.id } }"
-              >Show Form</router-link
+              >Form</router-link
             >
             <router-link
               :to="{ name: 'ShowChart', params: { formId: form.id } }"
               v-show="loggedIn"
-              >Show Chart</router-link
+              >Chart</router-link
             >
+            <a
+              class="badge badge-danger"
+              href="#"
+              @click.prevent="deleteForm(form.id)"
+            >
+              Delete
+            </a>
             <a
               :href="server_url + '/charts/' + form.id"
               v-show="loggedIn"
@@ -54,20 +61,35 @@ import axios from "../../modules/app-axios.js";
 export default {
   data() {
     return {
-      forms: [],
       server_url: ""
     };
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.loggedIn;
+    },
+    forms() {
+      return this.$store.state.form.forms;
     }
   },
   async created() {
-    let url = process.env.VUE_APP_SERVER_URL + "/forms";
-    let { data } = await axios.get(url);
-    this.forms = data;
-    this.server_url = process.env.VUE_APP_SERVER_URL;
+    try {
+      await this.$store.dispatch("form/fetchAllForms");
+      this.server_url = process.env.VUE_APP_SERVER_URL;
+    } catch (e) {
+      alert("Failed to fetch forms");
+      return;
+    }
+  },
+  methods: {
+    async deleteForm(formId) {
+      try {
+        await this.$store.dispatch("form/deleteForm", formId);
+      } catch (e) {
+        alert("Failed to delete form.");
+        return;
+      }
+    }
   }
 };
 </script>
