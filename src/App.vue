@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="/style/app.css" />
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -75,7 +73,7 @@ export default {
   methods: {
     async logoutAdmin() {
       try {
-        await this.$store.dispatch("logoutUser");
+        await this.$store.dispatch("auth/logoutUser");
         alert("Logout suceessfully.");
         this.$router.push({ name: "Login" });
       } catch (e) {

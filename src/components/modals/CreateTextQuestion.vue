@@ -121,7 +121,6 @@ export default {
       this.$store.commit("tmpQuestion/setQuestion", e.target.value);
     },
     setRequired(e) {
-      console.log("set required", e.target.checked);
       this.$store.commit("tmpQuestion/setRequired", e.target.checked);
     },
     setType(e) {

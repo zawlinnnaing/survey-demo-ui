@@ -71,10 +71,6 @@ export default {
   props: ["order"],
   computed: {
     questionObj() {
-      console.log(
-        "Changed question obj",
-        this.$store.getters.getQuestionFromOrder(this.order)
-      );
       return this.$store.getters.getQuestionFromOrder(this.order);
     },
     question() {
@@ -84,12 +80,6 @@ export default {
       return this.questionObj.type;
     },
     required() {
-      console.log(
-        "required",
-        Boolean(this.questionObj.required),
-        "String value ",
-        this.questionObj.required
-      );
       return this.questionObj.required;
     },
     items() {

@@ -8,7 +8,7 @@ div.individual-question {
 div.question-header {
   text-align: left;
   margin: 1rem 0;
-  color: white !important;
+  /* color: white !important; */
 }
 div.question-footer {
   display: flex;
@@ -24,5 +24,9 @@ div.question-footer * {
   margin: 0 2rem;
 }
 div.form-group label {
-  color: #fafafa;
+  /* color: #fafafa; */
+}
+
+.card {
+  box-shadow: 4px 4px #e0e0e0;
 }

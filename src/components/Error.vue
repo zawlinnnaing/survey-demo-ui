@@ -14,16 +14,21 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.jumbotron {
+  background-color: #cc0000;
+}
+li {
+  color: whitesmoke;
+}
+</style>
 
 <script>
 export default {
-  computed() {
-    return {
-      messages() {
-        return this.$store.state.error.messages;
-      }
-    };
+  computed: {
+    messages() {
+      return this.$store.state.error.messages;
+    }
   }
 };
 </script>

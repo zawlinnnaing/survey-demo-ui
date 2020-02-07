@@ -10,6 +10,9 @@
 div.jumbotron {
   background-color: #69f0ae;
 }
+h1 {
+  color: whitesmoke;
+}
 </style>
 
 <script>
