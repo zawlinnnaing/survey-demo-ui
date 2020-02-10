@@ -48,8 +48,7 @@ export default new Router({
     {
       path: "/create-form/success/:message",
       name: "CreateFormSuccess",
-      component: CreateFormSuccess,
-      beforeEnter: authMiddleware
+      component: CreateFormSuccess
     },
     {
       path: "/show-form/:formId",

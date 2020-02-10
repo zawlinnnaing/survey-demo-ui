@@ -53,8 +53,8 @@ export const answer = {
   actions: {
     async submitAnswers({ state, commit }, payload) {
       try {
-        let url = "/forms/ " + payload.formId + "/answers/" + payload.token;
-        let data = state.answer.answers;
+        let url = "/forms/" + payload.formId + "/answers/" + payload.token;
+        let data = state.answers;
         await axios.post(url, data);
         commit("clearAnswers");
       } catch (e) {

@@ -1,11 +1,14 @@
 <template>
   <div>
+    <generate-links :formId="formId" v-if="loggedIn"></generate-links>
     <section class="form-section">
       <h4>{{ title }}</h4>
       <hr />
       <p v-show="description != ''">{{ description }}</p>
       <div v-if="loggedIn" class="answer-links-section">
-        
+        <button class="btn btn-primary" @click="generateLinks">
+          Generate share links
+        </button>
       </div>
     </section>
     <div class="questions">
@@ -67,18 +70,21 @@ div.questions {
 import axios from "../../modules/app-axios";
 import TextQuestion from "./subcomponents/questions/TextQuestion";
 import ListQuestion from "./subcomponents/questions/ListQuestion";
+import GenerateLinks from "./modals/GenerateLinks";
 import questionTypes from "../../config/app";
 export default {
   components: {
     TextQuestion,
-    ListQuestion
+    ListQuestion,
+    GenerateLinks
   },
   data() {
     return {
       title: "",
       description: "",
       questions: "",
-      textQuestionTypes: questionTypes.textQuestionTypes
+      textQuestionTypes: questionTypes.textQuestionTypes,
+      formId: this.$route.params.formId
     };
   },
   computed: {
@@ -101,26 +107,33 @@ export default {
         this.$emit("submit-form");
         let token = this.$route.query.token;
         if (!token) {
-          alert("You can't answer without access token.");
+          this.$swal({
+            icon: "error",
+            text: "You cannot answer form without acesss token."
+          });
           return;
         }
         let payload = {
           formId: this.$route.params.formId,
-          token: this.$route.params.token
+          token: this.$route.query.token
         };
 
-        this.$store.dispatch("answer/submitAnswers", payload);
-        this.$router.push({
-          name: "CreateFormSuccess",
-          params: { message: "Answer submitted successfully" }
+        await this.$store.dispatch("answer/submitAnswers", payload);
+        this.$swal({
+          icon: "success",
+          title: "Answer submitted successfully."
         });
       } catch (e) {
-        this.$store.commit("error/clearMessages");
-        this.$store.commit("error/setMessage", e);
-        console.error(e);
-        alert("Form submission failed");
+        console.log(e);
+        this.$swal({
+          icon: "error",
+          title: "Form submittion failed."
+        });
         return;
       }
+    },
+    generateLinks() {
+      $("#generateLinkModal").modal("show");
     },
     goBack() {
       this.$router.go(-1);

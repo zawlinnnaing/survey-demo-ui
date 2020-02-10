@@ -295,7 +295,6 @@ export default {
           name: "Errors"
         });
         return;
-        // alert(e.data.message);
       }
     },
     sortQuestion(evt) {

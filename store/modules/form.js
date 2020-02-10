@@ -33,6 +33,38 @@ export default {
       } catch (e) {
         throw e;
       }
+    },
+    async generateAnswerLinks({ commit }, payload) {
+      try {
+        let url = `/forms/${payload.formId}/tokens`;
+        let { data } = await axios.post(url, {
+          count: payload.count
+        });
+        let answerLinks = data.tokens.map(ele => {
+          return {
+            link: `${payload.baseUrl}${ele.token}`,
+            answered: ele.answered
+          };
+        });
+        commit("setAnswerLinks", answerLinks);
+      } catch (e) {
+        throw e;
+      }
+    },
+    async getAnswerLinks({ commit }, payload) {
+      try {
+        let url = `/forms/${payload.formId}/links`;
+        let { data } = await axios.get(url);
+        let answerLinks = data.AccessTokens.map(ele => {
+          return {
+            link: `${payload.baseUrl}${ele.token}`,
+            answered: ele.answered
+          };
+        });
+        commit("setAnswerLinks", answerLinks);
+      } catch (e) {
+        throw e;
+      }
     }
   }
 };

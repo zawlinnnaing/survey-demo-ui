@@ -91,6 +91,11 @@ export default {
       };
       try {
         await this.$store.dispatch("auth/registerUser", data);
+        if (this.$route.query.redirect) {
+          this.$router.push(this.$route.query.redirect);
+        } else {
+          this.$router.push({ name: "Home" });
+        }
       } catch (e) {
         alert("Registration failed");
         console.error(e);

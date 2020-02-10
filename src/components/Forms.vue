@@ -27,7 +27,7 @@
               href="#"
               @click.prevent="deleteForm(form.id)"
             >
-              Delete
+              <font-awesome-icon icon="trash-alt"></font-awesome-icon>
             </a>
             <a
               :href="server_url + '/charts/' + form.id"
@@ -83,17 +83,31 @@ export default {
       await this.$store.dispatch("form/fetchAllForms");
       this.server_url = process.env.VUE_APP_SERVER_URL;
     } catch (e) {
-      alert("Failed to fetch forms");
+      this.$swal({
+        icon: "error",
+        title: "Failed to fetch forms. "
+      });
       return;
     }
   },
   methods: {
     async deleteForm(formId) {
       try {
-        if (confirm("Are you sure ?")) {
+        let { value } = await this.$swal({
+          icon: "warning",
+          title: "Are you sure ?",
+          text: "You can't undo this.",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Yes, Delete it!"
+        });
+        if (value) {
           await this.$store.dispatch("form/deleteForm", formId);
-          this.message = "Form deleted successfully.";
-          $("#successModal").modal("show");
+          this.$swal({
+            icon: "success",
+            title: "Form deleted successfully."
+          });
         }
       } catch (e) {
         alert("Failed to delete form.");

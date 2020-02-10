@@ -53,8 +53,14 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      previousUrl: ""
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.previousUrl = from.fullPath;
+    });
   },
   methods: {
     async login() {
@@ -64,7 +70,13 @@ export default {
       };
       try {
         await this.$store.dispatch("auth/loginUser", payload);
-        this.$router.push({ name: "Home" });
+        if (this.$route.query.redirect) {
+          this.$router.push(this.$route.query.redirect);
+        } else if (this.previousUrl) {
+          this.$router.push(this.previousUrl);
+        } else {
+          this.$router.push({ name: "Home" });
+        }
       } catch (e) {
         alert("Login Failed ");
         console.error(e);
