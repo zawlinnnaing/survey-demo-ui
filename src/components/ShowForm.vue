@@ -117,7 +117,6 @@ export default {
           formId: this.$route.params.formId,
           token: this.$route.query.token
         };
-
         await this.$store.dispatch("answer/submitAnswers", payload);
         this.$swal({
           icon: "success",

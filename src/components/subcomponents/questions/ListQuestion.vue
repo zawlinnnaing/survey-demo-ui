@@ -109,7 +109,10 @@ export default {
   created() {
     // this.$parent.$on("submit-form", () => {
     //   if (this.isRequired && this.listAnswers.length <= 0) {
-    //     alert(`Answer for question ${this.question} has not been submitted.`);
+    //     this.$swal({
+    //       icon: "error",
+    //       title: `Answer for question ${this.question} has not been submitted.`
+    //     });
     //     throw new Error(
     //       `Answer for question ${this.question} has not been submitted.`
     //     );
