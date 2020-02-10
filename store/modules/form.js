@@ -2,7 +2,8 @@ import axios from "../../modules/app-axios";
 export default {
   namespaced: true,
   state: {
-    forms: []
+    forms: [],
+    answerLinks: []
   },
   mutations: {
     removeForm(state, formId) {
@@ -11,6 +12,9 @@ export default {
     },
     setForms(state, forms) {
       state.forms = forms;
+    },
+    setAnswerLinks(state, answerLinks) {
+      state.answerLinks = answerLinks;
     }
   },
   actions: {

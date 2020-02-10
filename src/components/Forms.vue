@@ -49,7 +49,7 @@ table {
 }
 
 tr {
-  margin: 2rem;
+  margin: 0rem;
 }
 
 tr :last-child a {

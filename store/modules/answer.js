@@ -45,6 +45,21 @@ export const answer = {
           }
         }
       });
+    },
+    clearAnswers(state) {
+      state.answers = [];
+    }
+  },
+  actions: {
+    async submitAnswers({ state, commit }, payload) {
+      try {
+        let url = "/forms/ " + payload.formId + "/answers/" + payload.token;
+        let data = state.answer.answers;
+        await axios.post(url, data);
+        commit("clearAnswers");
+      } catch (e) {
+        throw e;
+      }
     }
   }
 };

@@ -4,6 +4,9 @@
       <h4>{{ title }}</h4>
       <hr />
       <p v-show="description != ''">{{ description }}</p>
+      <div v-if="loggedIn" class="answer-links-section">
+        
+      </div>
     </section>
     <div class="questions">
       <form action="#" @submit="submitAnswers" method="POST">
@@ -78,7 +81,11 @@ export default {
       textQuestionTypes: questionTypes.textQuestionTypes
     };
   },
-  computed: {},
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    }
+  },
   async created() {
     let url = "/forms/" + this.$route.params.formId;
     let { data } = await axios.get(url);
@@ -92,16 +99,25 @@ export default {
       e.preventDefault();
       try {
         this.$emit("submit-form");
-        let url = "/forms/ " + this.$route.params.formId + "/answers";
-        let data = this.$store.state.answer.answers;
-        let result = await axios.post(url, data);
+        let token = this.$route.query.token;
+        if (!token) {
+          alert("You can't answer without access token.");
+          return;
+        }
+        let payload = {
+          formId: this.$route.params.formId,
+          token: this.$route.params.token
+        };
+
+        this.$store.dispatch("answer/submitAnswers", payload);
         this.$router.push({
           name: "CreateFormSuccess",
           params: { message: "Answer submitted successfully" }
         });
       } catch (e) {
         this.$store.commit("error/clearMessages");
-        this.$store.commit("error/setMessage", e.message);
+        this.$store.commit("error/setMessage", e);
+        console.error(e);
         alert("Form submission failed");
         return;
       }
