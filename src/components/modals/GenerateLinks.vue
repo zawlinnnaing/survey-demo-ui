@@ -47,7 +47,7 @@
                     link.answered ? ['fa', 'check'] : ['fa', 'times-circle']
                   "
                   :style="
-                    link.answered ? { color: '#B2FF59' } : { color: '#F44336' }
+                    link.answered ? { color: '#28a745' } : { color: '#F44336' }
                   "
                 ></font-awesome-icon>
               </div>
@@ -103,9 +103,7 @@ export default {
       count: 1
     };
   },
-  created() {
-    console.log(this);
-  },
+  created() {},
   computed: {
     answerLinks() {
       return this.$store.state.form.answerLinks;
