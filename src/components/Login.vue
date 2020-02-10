@@ -78,7 +78,10 @@ export default {
           this.$router.push({ name: "Home" });
         }
       } catch (e) {
-        alert("Login Failed ");
+        this.$swal({
+          icon: "error",
+          title: "Login Failed."
+        });
         console.error(e);
         return;
       }

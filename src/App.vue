@@ -74,7 +74,10 @@ export default {
     async logoutAdmin() {
       try {
         await this.$store.dispatch("auth/logoutUser");
-        alert("Logout suceessfully.");
+        this.$swal({
+          icon: "success",
+          title: "Logout sucessfully."
+        });
         this.$router.push({ name: "Login" });
       } catch (e) {
         alert(e);
